@@ -9,15 +9,3 @@ class AccountMove(models.Model):
         default=False,
         help="Mark this entry as canceled technically."
     )
-
-    def post(self):
-        """
-        Overwrite post-method to check the field is_canceled.
-        """
-        for move in self:
-            if move.is_canceled:
-                # Raise an error that prevents saving and shows a pop-up to the user
-                raise UserError(_("You cannot post an entry that is marked as canceled."))
-        
-        # If there is no obstacle, call the original Odoo logic (super)
-        return super(AccountMove, self).post()
